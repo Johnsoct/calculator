@@ -56,30 +56,4 @@ export default class Calculator {
     // Enables chaining
     return this
   }
-
-  #updateTotal (operator, operand) {
-    const operatorRegex = /[+\-/*=]/
-
-    if (!operatorRegex.test(operator)) throw new Error('Unrecognized Operator')
-
-    this.#operands.push(operand)
-    this.#operations.push(operator)
-
-    if (operator === '+') this.total = this.add(operand)
-
-    if (operator === '/') this.total = this.divide(operand)
-
-    if (operator === '*') this.total = this.multiply(operand)
-
-    if (operator === '-') this.total = this.subtract(operand)
-
-    if (operator === '=') {
-      // If "=" is the first operator (remember we already added this operator)
-      if (this.#operations.length === 1) this.total = new Big(operand)
-      // If "=" is the second operator (remember we already added this operator)
-      if (this.#operations.length === 2)
-
-      this.#updateTotal(this.#operands[-1], this.#operations[-1])
-    }
-  }
 }
