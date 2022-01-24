@@ -55,9 +55,9 @@
 
 | Requirement | Built | Tested |
 |-------------|:-----:|:------:|
-| Public | O | O |
-| Defaults to [] | O | O |
-| Performing an operation overwrites the value with the last [operand, operator] | X | O |
+| Public | X | X |
+| Defaults to [] | X | X |
+| Performing an operation overwrites the value with the last [operand, operator] | O | O |
 | Until an "=" operator has been passed, the awaiting operation represents: the last operand + the last operator | O | O |
 | Once an "=" operator has been passed, the awaiting operation represents: last total [last operator] last operand = | O | O |
 
@@ -69,9 +69,9 @@
 
 | Requirement | Built | Tested |
 |-------------|:-----:|:------:|
-| Private | X | O |
+| Private | X | N/A |
 | Defaults to 0 | O | O |
-| Performing an operation increases the count by 1 | X | O |
+| Performing an operation increases the count by 1 | O | O |
 
 <br>
 <br>
@@ -94,7 +94,7 @@
 |-------------|:-----:|:------:|
 | Private | X | O |
 | Defaults to [] | O | O |
-| Performing an operation appends the new operand to operands | X | O |
+| Performing an operation appends the new operand to operands | O | O |
 
 <br>
 <br>
@@ -106,7 +106,7 @@
 |-------------|:-----:|:------:|
 | Private | X | O |
 | Defaults to [] | O | O |
-| Performing an operation appends the new operator to operations | X | O |
+| Performing an operation appends the new operator to operations | O | O |
 | If the newly appended operator is "=" but there's only 1 pre-existing operator in operations, just update the total | O | O |
 | If the newly appended operator is "=," repeat the last calculation with the most up to date total | O | O |
 
@@ -119,8 +119,8 @@
 | Requirement | Built | Tested |
 |-------------|:-----:|:------:|
 | Public | X | X |
-| Defaults to 0 | O | O |
-| Calculated by `total [operator]= operands[-1]` | X | X |
+| Defaults to big.js instance of 0 | X | X |
+| Calculated by `total [operator]= operands[-1]` | O | O |
 
 <br>
 <br>
@@ -133,77 +133,90 @@
   ## clear
   | Requirement | Built | Tested |
   |-------------|:-----:|:------:|
-  | Resets state | O | O |
+  | Resets state | X | X |
 
 
   ## add(value)
   | Requirement | Built | Tested |
   |-------------|:-----:|:------:|
-  | Public - External Interface | O | O |
-  | Update the total via addition | O | O |
-  | P + P | O | O |
-  | P + N | O | O |
-  | P + 0 | O | O |
-  | N + N | O | O |
-  | N + P | O | O |
-  | N + 0 | O | O |
-  | 0 + 0 | O | O |
+  | Public - External Interface | X | X |
+  | Update the total via addition | X | X |
+  | The awaiting operation is updated to: new total [operator paramater] | X | X |
+  | #operators is updated with a "+" | X | O |
+  | #operands is updated with the passed operand | X | O |
+  | P + P | X | X |
+  | P + N | X | X |
+  | P + 0 | X | X |
+  | N + N | X | X |
+  | N + P | X | X |
+  | N + 0 | X | X |
+  | 0 + 0 | X | X |
 
 
   ## divide(value)
   | Requirement | Built | Tested |
   |-------------|:-----:|:------:|
-  | Public - External Interface | O | O |
-  | Update the total via division | O | O |
-  | P / P | O | O |
-  | P / N | O | O |
-  | P / 0 | O | O |
-  | N / N | O | O |
-  | N / P | O | O |
-  | N / 0 | O | O |
-  | 0 / 0 | O | O |
+  | Public - External Interface | X | X |
+  | Update the total via division | X | X |
+  | The awaiting operation is updated to: new total [operator paramater] | X | X |
+  | #operators is updated with a "+" | X | O |
+  | #operands is updated with the passed operand | X | O |
+  | P / P | X | X |
+  | P / N | X | X |
+  | P / 0 | X | X |
+  | N / N | X | X |
+  | N / P | X | X |
+  | N / 0 | X | X |
+  | 0 / 0 | X | X |
 
 
 
   ## equal(value)
   | Requirement | Built | Tested |
   |-------------|:-----:|:------:|
-  | Public - External Interface | O | O |
+  | Public - External Interface | X | X |
   | The awaiting operation is updated to: last total [last operator] last operand = | O | O |
-  | If the first operator is =, the first operand is the total | O | O |
-  | If there isn't a value, the current total is taken as the current input and the total is updated using the last operator | O | O |
-  | If there is a value, update the total via addition | O | O |
+  | If the first operator is =, the total is the first operand | X | X |
+  | If the first operator is =, the awaiting operation is the first operand and '=' | X | X |
+  | If there isn't an operand, the current total is taken as the operand and the total is updated using the last operator | X | X |
+  | If there is a value, update the total via previous operator | X | X |
 
 
   ## multiply(value)
   | Requirement | Built | Tested |
   |-------------|:-----:|:------:|
-  | Public - External Interface | O | O |
-  | Update the total via multiplication | O | O |
-  | P * P | O | O |
-  | P * N | O | O |
-  | P * 0 | O | O |
-  | N * N | O | O |
-  | N * P | O | O |
-  | N * 0 | O | O |
-  | 0 * 0 | O | O |
+  | Public - External Interface | X | X |
+  | Update the total via multiplication | X | X |
+  | The awaiting operation is updated to: new total [operator paramater] | X | X |
+  | #operators is updated with a "+" | X | O |
+  | #operands is updated with the passed operand | X | O |
+  | P * P | X | X |
+  | P * N | X | X |
+  | P * 0 | X | X |
+  | N * N | X | X |
+  | N * P | X | X |
+  | N * 0 | X | X |
+  | 0 * 0 | X | X |
 
 
   ## subtract(value)
   | Requirement | Built | Tested |
   |-------------|:-----:|:------:|
-  | Public - External Interface | O | O |
-  | Update the total via subtraction | O | O |
-  | P - P | O | O |
-  | P - N | O | O |
-  | P - 0 | O | O |
-  | N - N | O | O |
-  | N - P | O | O |
-  | N - 0 | O | O |
-  | 0 - 0 | O | O |
+  | Public - External Interface | X | X |
+  | Update the total via subtraction | X | X |
+  | The awaiting operation is updated to: new total [operator paramater] | X | X |
+  | #operators is updated with a "+" | X | O |
+  | #operands is updated with the passed operand | X | O |
+  | P - P | X | X |
+  | P - N | X | X |
+  | P - 0 | X | X |
+  | N - N | X | X |
+  | N - P | X | X |
+  | N - 0 | X | X |
+  | 0 - 0 | X | X |
 
 
   ## total
   | Requirement | Built | Tested |
   |-------------|:-----:|:------:|
-  | Public - External Interface | O | O |
+  | Public - External Interface | X | X |
